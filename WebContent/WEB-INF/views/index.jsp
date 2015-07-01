@@ -5,39 +5,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=BIG5">
 <title>首頁</title>
-<link rel="stylesheet" type="text/css" href="./jss/plugin/kickstart/css/kickstart.css" media="all" />                  <!-- KICKSTART -->
+<link rel="stylesheet" type="text/css" href="./jss/plugin/jquery-ui/jquery-ui.min.css"/>
+<link rel="stylesheet" type="text/css" href="./jss/plugin/jquery-ui/jquery-ui.structure.min.css"/>
+<link rel="stylesheet" type="text/css" href="./jss/plugin/jquery-ui/jquery-ui.theme.min.css"/>
+<link rel="stylesheet" type="text/css" href="./jss/plugin/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="./jss/plugin/bootstrap/css/bootstrap-theme.min.css"/>
+
 </head>
 <body>
 <!--navigation-->
-<ul class="menu">
-<li class="current"><a href="#initContent">首頁</a></li>
-<li><a href="#bulletin">公佈欄</a></li>
-<li><a href=""><i class="fa fa-inbox"></i> Item 3</a>
-	<ul>
-	<li><a href=""><i class="fa fa-cog"></i> Sub Item</a></li>
-	<li><a href=""><i class="fa fa-envelope"></i> Sub Item</a>
-		<ul>
-		<li><a href=""><i class="fa fa-wrench"></i> Sub Item</a></li>
-		<li><a href=""><i class="fa fa-camera-retro"></i> Sub Item</a></li>
-		<li><a href=""><i class="fa fa-coffee"></i> Sub Item</a></li>
-		<li><a href=""><i class="fa fa-twitter"></i> Sub Item</a></li>
-		</ul>
-	</li>
-	<li class="divider"><a href=""><i class="fa fa-trash"></i> li.divider</a></li>
-	</ul>
-</li>
-<li><a href="">Item 4</a></li>
+<ul id="menu" class="nav nav-pills">
+  <li role="presentation" class="active"><a href="#initContent">首頁</a></li>
+  <li role="presentation"><a href="#bulletin">公佈欄</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
 </ul>
+<hr>
 <div id="content">
-	index
+	
 </div>
 <script type="text/javascript" src="./jss/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="./jss/plugin/kickstart/js/kickstart.js"></script> 
+<script type="text/javascript" src="./jss/plugin/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap.min.js"></script> 
 <script>
 		$(document).ready(function(e){
         	
             initialiseStateFromURL();
-
+            
+            $(".nav a").on("click", function(){
+            	   $(".nav").find(".active").removeClass("active");
+            	   $(this).parent().addClass("active");
+            });
+            
             $.ajaxSetup({
                 //async : false, //設置AJAX的同步
                 cache : false, //關閉 AJAX cache
@@ -65,10 +63,7 @@
     			} 
     		}
             
-            $(".menu li").on("click",function(){
-            	$(".menu li").removeClass("current");
-            	$(this).addClass("current");
-            });
+            
         });
         
 		
@@ -84,13 +79,13 @@
             		window.location.href = "index";
             	}else{
             		$("#content").load(url);
-            		$(".menu li a").each(function(){
+            		$(".nav a").each(function(){
                 		if($(this).attr("href")===hash){
-                			
-                			$(".menu li").removeClass("current");
-                        	$(this).parent("li").addClass("current");
+                			$(".nav").find(".active").removeClass("active");
+                     	   	$(this).parent("li").addClass("active");
                 		}
                 	});
+            		
             	}
             	
                 

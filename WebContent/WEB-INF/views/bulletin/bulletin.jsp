@@ -1,40 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-公布欄
-<table class="sortable" cellspacing="0" cellpadding="0">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#divDialog" id="btnBulletin_new">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增 
+</button>
+<table class="table table-striped" cellspacing="0" cellpadding="0">
 	<thead><tr class="alt first last">
-		<th rel="0" value="Name">Name</th>
-		<th rel="1" value="Number">Number</th>
-		<th rel="2" value="Color">Color</th>
-		<th rel="3" value="Actions">Actions</th>
+		<th>標題</th>
+		<th>描述</th>
+		<th>建立時間</th>
+		<th>建立者</th>
+		<th></th>
+		<th></th>
 	</tr></thead>
-	<tbody><tr class="first">
-		<td value="Joshua">Joshua</td>
-		<td value="555-4325">555-4325</td>
-		<td value="Blue">Blue</td>
-		<td value=" 
-		"><a href=""><i class="fa fa-pencil"></i></a> 
-		<a href=""><i class="fa fa-minus-square"></i></a></td>
-	</tr><tr class="alt">
-		<td value="Peter">Peter</td>
-		<td value="555-5698">555-5698</td>
-		<td value="Gold">Gold</td>
-		<td value=" 
-		"><a href=""><i class="fa fa-pencil"></i></a> 
-		<a href=""><i class="fa fa-minus-square"></i></a></td>
-	</tr><tr>
-		<td value="Mary">Mary</td>
-		<td value="666-7654">666-7654</td>
-		<td value="Red">Red</td>
-		<td value=" 
-		"><a href=""><i class="fa fa-pencil"></i></a> 
-		<a href=""><i class="fa fa-minus-square"></i></a></td>
-	</tr><tr class="alt last">
-		<td value="Gretty">Gretty</td>
-		<td value="555-6732">555-6732</td>
-		<td value="Pink">Pink</td>
-		<td value=" 
-		"><a href=""><i class="fa fa-pencil"></i></a> 
-		<a href=""><i class="fa fa-minus-square"></i></a></td>
-	</tr></tbody>
+	<tbody id="tbodyContent">
+	
+	</tbody>
 	</table>
+	
+<!-- add and edit dialog -->
+<div class="modal fade" id="divDialog" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel">
+  
+</div>
+<script>
+var loadContent = function(){
+	$("#tbodyContent").load("bulletin/content");	
+};
+
+var loadDialog = function(id){
+	$("#divDialog").load("bulletin/edit",{"id":id});
+};
+
+$(function(){
+	
+	$("#btnBulletin_new").on("click",function(){
+		$("#divDialog").load("bulletin/add");
+	});
+	loadContent();
+});
+
+</script>

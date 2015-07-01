@@ -7,12 +7,14 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd 
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/websocket  http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
 
 	<context:component-scan base-package="main.ryan" />
 	<mvc:annotation-driven />
@@ -30,6 +32,14 @@
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/myTest"></property>
 	</bean>
+	
+	<!-- websocket -->
+	<websocket:message-broker application-destination-prefix="/app">
+    <websocket:stomp-endpoint path="/ws">
+	  <websocket:sockjs/>
+	  </websocket:stomp-endpoint>
+	  <websocket:simple-broker prefix="/topic"/>
+	</websocket:message-broker>
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 	p:maxUploadSize="30960000" p:maxInMemorySize="1024" />

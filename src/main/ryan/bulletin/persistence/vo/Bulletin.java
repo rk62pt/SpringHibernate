@@ -1,5 +1,7 @@
 package main.ryan.bulletin.persistence.vo;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import main.ryan.bulletin.business.vo.BulletinVO;
 
@@ -30,53 +33,55 @@ public class Bulletin extends BulletinVO{
 		this.id = id;
 	}
 
-	@Override
-	public String getTb_title() {
+    @Column(name = "tb_title")
+	public String getTitle() {
 		// TODO Auto-generated method stub
-		return super.getTb_title();
+		return super.getTitle();
 	}
 
 	@Override
-	public void setTb_title(String tb_title) {
+	public void setTitle(String title) {
 		// TODO Auto-generated method stub
-		super.setTb_title(tb_title);
+		super.setTitle(title);
+	}
+
+	@Column(name = "tb_description")
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return super.getDescription();
 	}
 
 	@Override
-	public String getTb_description() {
+	public void setDescription(String description) {
 		// TODO Auto-generated method stub
-		return super.getTb_description();
+		super.setDescription(description);
+	}
+
+	@Column(name = "tb_create_time")
+	public Date getCreate_time() {
+		// TODO Auto-generated method stub
+		return super.getCreate_time();
 	}
 
 	@Override
-	public void setTb_description(String tb_description) {
+	public void setCreate_time(Date create_time) {
 		// TODO Auto-generated method stub
-		super.setTb_description(tb_description);
+		super.setCreate_time(create_time);
+	}
+
+	@Column(name = "tb_creator")
+	public String getCreator() {
+		// TODO Auto-generated method stub
+		return super.getCreator();
 	}
 
 	@Override
-	public String getTb_create_time() {
+	public void setCreator(String creator) {
 		// TODO Auto-generated method stub
-		return super.getTb_create_time();
+		super.setCreator(creator);
 	}
 
-	@Override
-	public void setTb_create_time(String tb_create_time) {
-		// TODO Auto-generated method stub
-		super.setTb_create_time(tb_create_time);
-	}
-
-	@Override
-	public String getTb_creator() {
-		// TODO Auto-generated method stub
-		return super.getTb_creator();
-	}
-
-	@Override
-	public void setTb_creator(String tb_creator) {
-		// TODO Auto-generated method stub
-		super.setTb_creator(tb_creator);
-	}
+	
     
     
 }

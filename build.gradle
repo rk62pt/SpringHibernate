@@ -51,6 +51,8 @@ dependencies {
     compile 'org.springframework:spring-tx:'+deps.springVersion
     compile 'org.springframework:spring-orm:'+deps.springVersion
     compile 'org.springframework:spring-context:'+deps.springVersion
+    compile 'org.springframework:spring-websocket:'+deps.springVersion
+    compile 'org.springframework:spring-messaging:'+deps.springVersion
     
     //hibernate
     compile 'org.hibernate:hibernate-core:'+deps.hibernateVersion
@@ -61,6 +63,12 @@ dependencies {
     compile 'org.hibernate:hibernate-proxool:'+deps.hibernateVersion
     compile 'org.hibernate:hibernate-infinispan:'+deps.hibernateVersion
     compile 'org.hibernate:hibernate-ehcache:'+deps.hibernateVersion
+    
+    //jackson
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.12'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.12'
     
     //db
     compile 'mysql:mysql-connector-java:5.1.9'

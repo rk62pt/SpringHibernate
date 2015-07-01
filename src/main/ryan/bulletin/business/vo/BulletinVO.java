@@ -1,39 +1,48 @@
 package main.ryan.bulletin.business.vo;
 
+import java.util.Date;
+
 public class BulletinVO {
 	protected Integer id;
-	protected String tb_title;
-	protected String tb_description;
-	protected String tb_create_time;
-	protected String tb_creator;
+	protected String title;
+	protected String description;
+	protected Date create_time;
+	protected String creator;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getTb_title() {
-		return tb_title;
+	public String getTitle() {
+		return title;
 	}
-	public void setTb_title(String tb_title) {
-		this.tb_title = tb_title;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getTb_description() {
-		return tb_description;
+	public String getDescription() {
+		return description;
 	}
-	public void setTb_description(String tb_description) {
-		this.tb_description = tb_description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public String getTb_create_time() {
-		return tb_create_time;
+	public Date getCreate_time() {
+		return create_time;
 	}
-	public void setTb_create_time(String tb_create_time) {
-		this.tb_create_time = tb_create_time;
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
 	}
-	public String getTb_creator() {
-		return tb_creator;
+	public String getCreator() {
+		return creator;
 	}
-	public void setTb_creator(String tb_creator) {
-		this.tb_creator = tb_creator;
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
+	@Override
+	public String toString() {
+		return "BulletinVO [id=" + id + ", title=" + title + ", description="
+				+ description + ", create_time=" + create_time + ", creator="
+				+ creator + "]";
+	}
+	
 }
