@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
+import main.ryan.authority.business.vo.MessageVO;
 import main.ryan.authority.business.vo.StockVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class AuthorityController {
 	private SimpMessagingTemplate template;
 	private TaskScheduler scheduler = new ConcurrentTaskScheduler();
 	private List<StockVO> stockPrices = new ArrayList<StockVO>();
+	private List<MessageVO> msgs = new ArrayList<MessageVO>();
 	private Random rand = new Random(System.currentTimeMillis());
 	
 	private void updatePriceAndBroadcast() {
@@ -34,6 +36,16 @@ public class AuthorityController {
 	      stock.setTime(new Date());
 	    }
 	    template.convertAndSend("/topic/price", stockPrices);
+	  }
+	
+	private void updateMessageAndBroadcast() {
+//	    for(MessageVO msg : msgs) {
+//	      double chgPct = rand.nextDouble() * 5.0;
+//	      if(rand.nextInt(2) == 1) chgPct = -chgPct;
+//	      stock.setPrice(stock.getPrice() + (chgPct / 100.0 * stock.getPrice()));
+//	      stock.setTime(new Date());
+//	    }
+	    template.convertAndSend("/topic/msg", msgs);
 	  }
 	   
 	  /**
@@ -56,6 +68,17 @@ public class AuthorityController {
 	  public void addStock(StockVO stock) throws Exception {
 	    stockPrices.add(stock);
 	    updatePriceAndBroadcast();
+	  }
+	  
+	  @MessageMapping("/addMsg")
+	  public void addMsg(MessageVO msg) throws Exception {
+	    msgs.add(msg);
+	    updateMessageAndBroadcast();
+	  }
+	  
+	  @MessageMapping("/updateMsg")
+	  public void updateMsg() throws Exception {
+		updateMessageAndBroadcast();
 	  }
 	  
 	  /**

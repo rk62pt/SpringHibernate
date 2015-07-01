@@ -35,13 +35,13 @@
 </div>
 </div>
 <!--script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script-->
-<script src="jss/sockjs.js"></script>
-<script src="jss/stomp.js"></script>
+<!-- <script src="jss/sockjs.js"></script>
+<script src="jss/stomp.js"></script> -->
 <script>
     //Create stomp client over sockJS protocol
-    var socket = new SockJS("/SpringHibernate/ws");
+    //var socket = new SockJS("/SpringHibernate/ws");
     //var socket = new WebSocket("/SpringHibernate/ws");
-    var stompClient = Stomp.over(socket);
+    //var stompClient = Stomp.over(socket);
     // Render price data from server into HTML, registered as callback
     // when subscribing to price topic
     function renderPrice(frame) {
@@ -60,15 +60,15 @@
     }
     
     // Callback function to be called when stomp client is connected to server
-    var connectCallback = function() {
+    /* var connectCallback = function() {
       stompClient.subscribe('/topic/price', renderPrice);
-    }; 
+    };  */
     // Callback function to be called when stomp client could not connect to server
-    var errorCallback = function(error) {
+    /* var errorCallback = function(error) {
       alert(error.headers.message);
-    };
+    }; */
     // Connect to server via websocket
-    stompClient.connect("guest", "guest", connectCallback, errorCallback);
+    /* stompClient.connect("guest", "guest", connectCallback, errorCallback); */
     
     // Register handler for add button
     $(document).ready(function() {
