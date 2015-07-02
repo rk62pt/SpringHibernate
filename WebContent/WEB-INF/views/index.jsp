@@ -35,6 +35,7 @@
     	<a href="javascript:void(0);" id="linkMsg" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span></a>
     	<span class="badge" id="spanMsg">0</span>
     	<ul id="ulMsg" class="dropdown-menu" aria-labelledby="linkMeg">
+    		<li>無訊息</li>
         </ul>
 	</div>
 </div>
@@ -53,10 +54,12 @@
 <script type="text/javascript" src="./jss/plugin/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap-hover-dropdown.js"></script>
-<script src="jss/sockjs.js"></script>
+<!-- script src="jss/sockjs.js"></script -->
 <script src="jss/stomp.js"></script>
 <script>
-var socket = new SockJS("/SpringHibernate/ws");
+var wsUrl = "ws://localhost:8080/SpringHibernate";
+//var socket = new SockJS("/SpringHibernate/ws");
+var socket = new WebSocket(wsUrl+"/ws/websocket");
 var stompClient = Stomp.over(socket);
 function renderMsg(frame) {
     var msgs = JSON.parse(frame.body);

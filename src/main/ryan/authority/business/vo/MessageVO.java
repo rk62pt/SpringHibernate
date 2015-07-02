@@ -7,6 +7,8 @@ public class MessageVO {
 	protected String content;
 	protected Date create_time;
 	protected String status;
+	protected String ip;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -30,5 +32,11 @@ public class MessageVO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 }

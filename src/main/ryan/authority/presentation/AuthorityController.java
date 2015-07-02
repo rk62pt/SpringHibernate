@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 
 import main.ryan.authority.business.vo.MessageVO;
 import main.ryan.authority.business.vo.StockVO;
@@ -18,6 +23,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.sockjs.client.WebSocketClientSockJsSession;
 
 @Controller
 public class AuthorityController {
@@ -27,7 +33,7 @@ public class AuthorityController {
 	private List<StockVO> stockPrices = new ArrayList<StockVO>();
 	private List<MessageVO> msgs = new ArrayList<MessageVO>();
 	private Random rand = new Random(System.currentTimeMillis());
-	
+    
 	private void updatePriceAndBroadcast() {
 	    for(StockVO stock : stockPrices) {
 	      double chgPct = rand.nextDouble() * 5.0;
@@ -52,14 +58,14 @@ public class AuthorityController {
 	   * Invoked after bean creation is complete, this method will schedule 
 	   * updatePriceAndBroacast every 1 second
 	   */
-	  @PostConstruct
-	  private void broadcastTimePeriodically() {
-	    scheduler.scheduleAtFixedRate(new Runnable() {
-	      @Override public void run() {
+	 // @PostConstruct
+	 // private void broadcastTimePeriodically() {
+	    //scheduler.scheduleAtFixedRate(new Runnable() {
+	     // @Override public void run() {
 	        //updatePriceAndBroadcast();
-	      }
-	    }, 1000);
-	  }
+	     // }
+	    //}, 1000);
+	  //}
 	   
 	  /**
 	   * Handler to add one stock

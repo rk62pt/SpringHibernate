@@ -12,6 +12,7 @@
 <li>Hibernate</li>
 <li>JQuery</li>
 <li>Bootstript</li>
+<li>webSocket</li>
 </ul>
 
 

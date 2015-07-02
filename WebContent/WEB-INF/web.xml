@@ -15,6 +15,7 @@ version="3.0">
 			/WEB-INF/applicationContext.xml
 		</param-value>
     </init-param>
+    <async-supported>true</async-supported>
   </servlet>
 
   <servlet-mapping>
