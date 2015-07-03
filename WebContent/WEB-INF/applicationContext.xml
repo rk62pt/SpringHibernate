@@ -21,9 +21,9 @@
 	<mvc:resources mapping="/**" location="/" />
 
 	<!-- Configuring interceptors based on URI -->
-	<!-- <mvc:interceptors>
-      <bean class="main.gg.team.java.authority.presentation.Interceptor.AuthorityInterceptor" />
-    </mvc:interceptors>  -->
+	<!-- <websocket:interceptors>
+      <bean class="main.ryan.authority.presentation.interceptor.AuthorityInterceptor" />
+    </websocket:interceptors> -->
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -36,11 +36,17 @@
 	<!-- websocket -->
 	<websocket:message-broker application-destination-prefix="/app">
     <websocket:stomp-endpoint path="/ws">
-	  <websocket:sockjs/>
-	  </websocket:stomp-endpoint>
-	  <websocket:simple-broker prefix="/topic"/>
+	  <!-- <websocket:sockjs/>-->
+	  <websocket:handshake-interceptors>
+            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+      </websocket:handshake-interceptors>
+        <websocket:sockjs session-cookie-needed="true" />
+	</websocket:stomp-endpoint>
+	<websocket:simple-broker prefix="/topic"/>
 	</websocket:message-broker>
 	
+	
+
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 	p:maxUploadSize="30960000" p:maxInMemorySize="1024" />
 

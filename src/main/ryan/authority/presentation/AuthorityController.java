@@ -3,6 +3,7 @@ package main.ryan.authority.presentation;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
@@ -17,12 +18,14 @@ import main.ryan.authority.business.vo.StockVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.sockjs.client.WebSocketClientSockJsSession;
 
 @Controller
@@ -30,19 +33,10 @@ public class AuthorityController {
 	@Autowired 
 	private SimpMessagingTemplate template;
 	private TaskScheduler scheduler = new ConcurrentTaskScheduler();
-	private List<StockVO> stockPrices = new ArrayList<StockVO>();
 	private List<MessageVO> msgs = new ArrayList<MessageVO>();
 	private Random rand = new Random(System.currentTimeMillis());
     
-	private void updatePriceAndBroadcast() {
-	    for(StockVO stock : stockPrices) {
-	      double chgPct = rand.nextDouble() * 5.0;
-	      if(rand.nextInt(2) == 1) chgPct = -chgPct;
-	      stock.setPrice(stock.getPrice() + (chgPct / 100.0 * stock.getPrice()));
-	      stock.setTime(new Date());
-	    }
-	    template.convertAndSend("/topic/price", stockPrices);
-	  }
+	
 	
 	private void updateMessageAndBroadcast() {
 //	    for(MessageVO msg : msgs) {
@@ -67,17 +61,12 @@ public class AuthorityController {
 	    //}, 1000);
 	  //}
 	   
-	  /**
-	   * Handler to add one stock
-	   */
-	  @MessageMapping("/addStock")
-	  public void addStock(StockVO stock) throws Exception {
-	    stockPrices.add(stock);
-	    updatePriceAndBroadcast();
-	  }
+	 
 	  
 	  @MessageMapping("/addMsg")
-	  public void addMsg(MessageVO msg) throws Exception {
+	  public void addMsg(SimpMessageHeaderAccessor headerAccessor,MessageVO msg) throws Exception {
+		Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
+		System.out.println(sessionAttributes.get("HTTP.SESSION.ID"));  
 	    msgs.add(msg);
 	    updateMessageAndBroadcast();
 	  }
@@ -87,22 +76,7 @@ public class AuthorityController {
 		updateMessageAndBroadcast();
 	  }
 	  
-	  /**
-	   * Handler to add one stock
-	   */
-	  @MessageMapping("/updateStock")
-	  public void updateStock() throws Exception {
-	    updatePriceAndBroadcast();
-	  }
-	   
-	  /**
-	   * Handler to remove all stocks
-	   */
-	  @MessageMapping("/removeAllStocks")
-	  public void removeAllStocks() {
-	    stockPrices.clear();
-	    updatePriceAndBroadcast();
-	  }
+	 
 	
 	@RequestMapping(value="index",method=RequestMethod.GET)
 	public String mainPage(){

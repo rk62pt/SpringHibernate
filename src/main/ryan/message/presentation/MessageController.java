@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MessageController {
 	
 	@RequestMapping(value="message",method=RequestMethod.GET)
-	public String bulletin(){ 
+	public String message(){ 
+		
 		return "message/message";
 	}
 }
