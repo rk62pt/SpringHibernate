@@ -31,8 +31,10 @@
 </ul>
 </div>
 <div class="col-md-1">
-	<div class="notification-icon">
-    	<a href="javascript:void(0);" id="linkMsg" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span></a>
+	<div class="notification-icon" id="divMsgList">
+    	<a href="javascript:void(0);" id="linkMsg" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" role="button" aria-haspopup="true" aria-expanded="false">
+    	<span class="glyphicon glyphicon-envelope"></span>
+    	</a>
     	<span class="badge" id="spanMsg">0</span>
     	<ul id="ulMsg" class="dropdown-menu" aria-labelledby="linkMeg">
     		<li>無訊息</li>
@@ -40,15 +42,38 @@
 	</div>
 </div>
 <div class="col-md-2">
-	<div class="notification-icon ">
-    	<a href="javascript:void(0);"><span class="glyphicon glyphicon-user"></span></a>
-    	<span class="label label-info">訪客</span>
+	<div class="notification-icon " title="輸入一個名字">
+    	<a href="" id="linkUser" data-toggle="modal" data-target="#userModal">
+    		<span class="glyphicon glyphicon-user"></span>
+    	</a>
+    	<span class="label label-info" id="spanUser">
+    		訪客
+    	</span>
+    	
 	</div>
 </div>
 </div>
 <hr>
 <div id="content" class="col-md-12">
 	
+</div>
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">換一個名字</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" id="txtName" placeholder="John">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+        <button type="button" class="btn btn-primary" id="btnChangeName">儲存</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="./jss/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="./jss/plugin/jquery-ui/jquery-ui.min.js"></script>
@@ -61,18 +86,24 @@ var wsUrl = "ws://localhost:8080/SpringHibernate";
 //var socket = new SockJS("/SpringHibernate/ws");
 var socket = new WebSocket(wsUrl+"/ws/websocket");
 var stompClient = Stomp.over(socket);
+var user = "訪客";
+var msgTime = new Date().getTime();
 function renderMsg(frame) {
     var msgs = JSON.parse(frame.body);
     $('#ulMsg').empty();
+    var msgsLength = 0;
     for(var i in msgs) {
       var msg = msgs[i];
-      $('#ulMsg').append(
-        $('<li>').append(
-          $('<a>').html(msg.content)
-        )
-      );
+      if(msg.create_time>=msgTime){
+	      $('#ulMsg').append(
+	        $('<li>').append(
+	          $('<a>').html(msg.user + " > " + msg.content)
+	        )
+	      );
+	      msgsLength++;
+      }
     }
-    $("#spanMsg").html(msgs.length)
+    $("#spanMsg").html(msgsLength)
   }
 var msgConnectCallback = function() {
 	//console.log("--------連線中----");
@@ -86,6 +117,8 @@ var msgErrorCallback = function(error) {
 };
     // Connect to server via websocket
 stompClient.connect("guest", "guest", msgConnectCallback, msgErrorCallback);
+    
+    
 		$(document).ready(function(e){
         	
             initialiseStateFromURL();
@@ -123,6 +156,28 @@ stompClient.connect("guest", "guest", msgConnectCallback, msgErrorCallback);
     		}
             //initLoadMsgCount
             //stompClient.send("/app/updateMsg");
+            $('#btnChangeName').on("click",function(e){
+                //e.preventDefault();
+                /* var user = $(this).val();
+                var jsonstr = JSON.stringify({ 'user': user });
+                stompClient.send("/app/updateUser", {}, jsonstr); */
+                if($("#txtName").val()!==""){
+                	user = $("#txtName").val();
+                }                
+                $("#spanUser").html(user);
+                $("#userModal").modal('hide');
+                //return false;
+            });
+            
+            $("#linkMsg").on("click",function(){
+            	msgTime = new Date().getTime();
+            	//stompClient.send("/app/updateMsg");
+            });
+            $("#divMsgList").on({"hide.bs.dropdown":  function() { 
+            		stompClient.send("/app/updateMsg");
+            		return this.closable; 
+            	}
+            });
         });
         
 		

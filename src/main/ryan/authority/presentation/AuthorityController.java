@@ -2,19 +2,19 @@ package main.ryan.authority.presentation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.EndpointConfig;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+
+
+
 
 import main.ryan.authority.business.vo.MessageVO;
-import main.ryan.authority.business.vo.StockVO;
+import main.ryan.authority.business.vo.UserVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,19 +25,26 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.sockjs.client.WebSocketClientSockJsSession;
 
+
 @Controller
-public class AuthorityController {
+public class AuthorityController{
+	
+	
+	
 	@Autowired 
 	private SimpMessagingTemplate template;
 	private TaskScheduler scheduler = new ConcurrentTaskScheduler();
+	//訊息清單
 	private List<MessageVO> msgs = new ArrayList<MessageVO>();
 	private Random rand = new Random(System.currentTimeMillis());
-    
-	
-	
+ 
+
 	private void updateMessageAndBroadcast() {
 //	    for(MessageVO msg : msgs) {
 //	      double chgPct = rand.nextDouble() * 5.0;
@@ -64,10 +71,15 @@ public class AuthorityController {
 	 
 	  
 	  @MessageMapping("/addMsg")
-	  public void addMsg(SimpMessageHeaderAccessor headerAccessor,MessageVO msg) throws Exception {
+	  public void addMsg(SimpMessageHeaderAccessor headerAccessor , MessageVO msg) throws Exception {
 		Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
-		System.out.println(sessionAttributes.get("HTTP.SESSION.ID"));  
+		//System.out.println(headerAccessor.getLocalAddress());
+		//System.out.println(sessionAttributes);
+		msg.setCreate_time(new Date());
 	    msgs.add(msg);
+	    if(msgs.size()>10){
+	    	msgs.remove(0);
+	    }
 	    updateMessageAndBroadcast();
 	  }
 	  

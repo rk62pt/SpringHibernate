@@ -8,7 +8,14 @@ public class MessageVO {
 	protected Date create_time;
 	protected String status;
 	protected String ip;
+	protected String user;
 	
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
 	public Integer getId() {
 		return id;
 	}
