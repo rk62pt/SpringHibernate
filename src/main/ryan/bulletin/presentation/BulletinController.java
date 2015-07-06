@@ -34,7 +34,6 @@ public class BulletinController {
 	
 	@RequestMapping(value="bulletin/content",method=RequestMethod.GET)
 	public ModelAndView bulletin_content(){ 
-		System.out.println("bulletin");
 		List<BulletinVO> voList = new ArrayList<BulletinVO>();
 		try{
 			voList = bulletinService.list();

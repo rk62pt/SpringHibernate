@@ -55,7 +55,6 @@ public class BulletinApiController {
 			vo.setDescription(description);
 			vo.setCreate_time(new Date());
 			vo.setCreator("admin");
-			System.out.println(vo);
 			vo = bulletinService.modify(vo);
 		}catch(Exception e){
 			System.out.println(e);
@@ -65,5 +64,21 @@ public class BulletinApiController {
 		return vo;
 	}
 	
+	@RequestMapping(value="rest/bulletin/delete",method=RequestMethod.POST)
+	@ResponseBody
+	public BulletinVO bulletin_deleteData(HttpServletRequest request, HttpServletResponse response){ 
+		BulletinVO vo = new BulletinVO();
+		
+		try{
+			Integer id = Integer.parseInt(WebUtils.findParameterValue(request, "id"));
+			vo.setId(id);
+			Integer result = bulletinService.delete(vo);
+		}catch(Exception e){
+			System.out.println(e);
+			
+		}
+		
+		return vo;
+	}
 	
 }

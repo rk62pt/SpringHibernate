@@ -13,8 +13,12 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
 import main.ryan.authority.business.vo.MessageVO;
 import main.ryan.authority.business.vo.UserVO;
+import main.ryan.bulletin.business.BulletinManager;
+import main.ryan.bulletin.business.vo.BulletinVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,6 +29,7 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
@@ -35,7 +40,8 @@ import org.springframework.web.socket.sockjs.client.WebSocketClientSockJsSession
 @Controller
 public class AuthorityController{
 	
-	
+	@Autowired
+	private BulletinManager bulletinService;
 	
 	@Autowired 
 	private SimpMessagingTemplate template;
@@ -97,8 +103,15 @@ public class AuthorityController{
 	}
 	
 	@RequestMapping(value="initContent",method=RequestMethod.GET)
-	public String initContent(){
+	public ModelAndView initContent(){
+		List<BulletinVO> voList = new ArrayList<BulletinVO>();
+		try{
+			voList = bulletinService.list();
+		}catch(Exception e){
+			System.out.println(e);
+		}
 		
-		return "authority/initContent";
+		ModelAndView modelAndView = new ModelAndView("authority/initContent", "voList", voList);
+		return modelAndView;
 	}
 }

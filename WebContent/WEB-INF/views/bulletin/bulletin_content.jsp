@@ -14,7 +14,7 @@
 		</button>	
 		</td>
 		<td>
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#dialog_add">
+		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#dialog_add" onclick="delData(${vo.id});">
 		  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 刪除 
 		</button>
 		</td>
@@ -27,12 +27,23 @@ $(function(){
 	    trigger: 'hover',
 	        'placement': 'top'
 	});
-	//$(".trBulletin").popover();
-	/* $( ".trBulletin" ).tooltip({
-	      show: {
-	        effect: "slideDown",
-	        delay: 250
-	      }
-	}); */
+	
 });
+var delData = function(id){
+	$.confirm({
+	    text: "是否確定刪除?",
+	    confirmButton:"是",
+	    cancelButton:"否",
+	    confirm: function() {
+	    	$.post("rest/bulletin/delete",{id:id},function(){
+	    		loadContent();
+	    	});	    	
+	    },
+	    cancel: function() {
+	        // nothing to do
+	    }
+	});
+	
+	
+}
 </script>

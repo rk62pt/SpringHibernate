@@ -71,7 +71,8 @@ public class BulletinManagerImpl implements BulletinManager {
 
 	@Override
 	public Integer delete(BulletinVO vo) throws Exception {
-		// TODO Auto-generated method stub
+		Bulletin entity =	bulletinDAO.getByPK(vo.getId());
+		bulletinDAO.delete(entity);
 		return 0;
 	}
 

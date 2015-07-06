@@ -79,6 +79,7 @@
 <script type="text/javascript" src="./jss/plugin/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap-hover-dropdown.js"></script>
+<script type="text/javascript" src="./jss/plugin/jquery.confirm/jquery.confirm.js"></script>
 <script src="jss/sockjs.js"></script>
 <script src="jss/stomp.js"></script>
 <script>
