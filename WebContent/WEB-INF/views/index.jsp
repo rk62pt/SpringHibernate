@@ -79,12 +79,13 @@
 <script type="text/javascript" src="./jss/plugin/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="./jss/plugin/bootstrap/js/bootstrap-hover-dropdown.js"></script>
-<!-- script src="jss/sockjs.js"></script -->
+<script src="jss/sockjs.js"></script>
 <script src="jss/stomp.js"></script>
 <script>
-var wsUrl = "ws://localhost:8080/SpringHibernate";
-//var socket = new SockJS("/SpringHibernate/ws");
-var socket = new WebSocket(wsUrl+"/ws/websocket");
+//var wsUrl = "ws://localhost:8080/SpringHibernate";
+//var wsUrl = "/SpringHibernate";
+var socket = new SockJS("/SpringHibernate/ws");
+//var socket = new WebSocket(wsUrl+"/ws/websocket");
 var stompClient = Stomp.over(socket);
 var user = "訪客";
 var msgTime = new Date().getTime();

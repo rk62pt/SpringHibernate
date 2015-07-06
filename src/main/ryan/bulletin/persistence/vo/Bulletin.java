@@ -20,7 +20,7 @@ import main.ryan.bulletin.business.vo.BulletinVO;
  */
 @Repository
 @Entity
-@Table(name = "BULLETIN")
+@Table(name = "bulletin")
 public class Bulletin extends BulletinVO{
 	@Id
 	@Column(name = "id")

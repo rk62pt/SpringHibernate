@@ -25,12 +25,21 @@ $(function(){
         return false;
     });
 	$('#divMsgs').empty();
-	stompClient.subscribe('/topic/msg', renderUserMsg);
-	stompClient.send("/app/updateMsg");
+	setTimeout(function(){
+		//console.log("10000");
+		//console.log(stompClient);
+		stompClient.subscribe('/topic/msg', renderUserMsg);
+		stompClient.send("/app/updateMsg");
+	},100);
+	
+	
+	//stompClient.subscribe('/topic/msg', renderUserMsg);
+	//stompClient.send("/app/updateMsg");
 });
+
 function renderUserMsg(frame) {
     var msgs = JSON.parse(frame.body);
-    console.log("test");
+    //alert("test");
     $('#divMsgs').empty();
     for(var i in msgs) {
       var msg = msgs[i];
@@ -40,4 +49,5 @@ function renderUserMsg(frame) {
     }
     
 }
+
 </script>
